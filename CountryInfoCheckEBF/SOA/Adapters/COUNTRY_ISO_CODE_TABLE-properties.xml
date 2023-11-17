@@ -1,0 +1,15 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+   <entry key="COUNTRY_ISO_CODE_TABLE:db_column_1">COUNTRY_ISO_CODE</entry>
+   <entry key="COUNTRY_ISO_CODE_TABLE.COUNTRY_NAME:db_column_not_null">true</entry>
+   <entry key="COUNTRY_ISO_CODE_TABLE:db_column_0">COUNTRY_NAME</entry>
+   <entry key="COUNTRY_ISO_CODE_TABLE.COUNTRY_NAME:db_column_size">200</entry>
+   <entry key="COUNTRY_ISO_CODE_TABLE.COUNTRY_ISO_CODE:db_column_type">VARCHAR2</entry>
+   <entry key="return_single_result_set">false</entry>
+   <entry key="COUNTRY_ISO_CODE_TABLE.COUNTRY_ISO_CODE:db_column_size">5</entry>
+   <entry key="COUNTRY_ISO_CODE_TABLE:db_table_type">TABLE</entry>
+   <entry key="root_descriptor_alias">COUNTRY_ISO_CODE_TABLE</entry>
+   <entry key="COUNTRY_ISO_CODE_TABLE.COUNTRY_ISO_CODE:db_column_not_null">true</entry>
+   <entry key="COUNTRY_ISO_CODE_TABLE.COUNTRY_NAME:db_column_type">VARCHAR2</entry>
+</properties>

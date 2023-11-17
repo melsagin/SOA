@@ -1,0 +1,31 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<xs:schema targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/top/COUNTRY_ISO_CODE_TABLE" xmlns="http://xmlns.oracle.com/pcbpel/adapter/db/top/COUNTRY_ISO_CODE_TABLE" elementFormDefault="qualified" attributeFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+   <xs:element name="CountryIsoCodeTableCollection" type="CountryIsoCodeTableCollection"/>
+   <xs:complexType name="CountryIsoCodeTableCollection">
+      <xs:sequence>
+         <xs:element name="CountryIsoCodeTable" type="CountryIsoCodeTable" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="CountryIsoCodeTable">
+      <xs:sequence>
+         <xs:element name="countryName" type="string200" minOccurs="0"/>
+         <xs:element name="countryIsoCode" type="string5"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:element name="COUNTRY_ISO_CODE_TABLESelect_countryNameInputParameters" type="COUNTRY_ISO_CODE_TABLESelect_countryName"/>
+   <xs:complexType name="COUNTRY_ISO_CODE_TABLESelect_countryName">
+      <xs:sequence>
+         <xs:element name="countryName" type="xs:string" minOccurs="1" maxOccurs="1"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:simpleType name="string200">
+      <xs:restriction base="xs:string">
+         <xs:maxLength value="200"/>
+      </xs:restriction>
+   </xs:simpleType>
+   <xs:simpleType name="string5">
+      <xs:restriction base="xs:string">
+         <xs:maxLength value="5"/>
+      </xs:restriction>
+   </xs:simpleType>
+</xs:schema>

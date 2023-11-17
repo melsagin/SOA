@@ -1,0 +1,262 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer 
+  
+  Created: Thu Jul 20 16:46:19 EEST 2023
+  Author:  etiya
+  Purpose: Synchronous BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="CountryInfoCheckEBF"
+               targetNamespace="http://xmlns.oracle.com/12cSOA/CountryInfoCheckEBF/CountryInfoCheckEBF"
+               xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+               xmlns:client="http://xmlns.oracle.com/12cSOA/CountryInfoCheckEBF/CountryInfoCheckEBF"
+               xmlns:ora="http://schemas.oracle.com/xpath/extension"
+               xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+               xmlns:ns1="http://xmlns.oracle.com/Service/CountryInfoCheckEBF/CountryInfoCheckEBF"
+               xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:ui="http://xmlns.oracle.com/soa/designer"
+         xmlns:ns2="http://xmlns.oracle.com/OSB/CountryInfo/CountryInfoCheckProvABCS"
+         xmlns:ns3="http://tempuri.org/PurchaseOrderSchema.xs"
+         xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc"
+         xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions"
+         xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20"
+         xmlns:ess="http://xmlns.oracle.com/scheduler" xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath"
+         xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions"
+         xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue"
+         xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/"
+         xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk"
+         xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath"
+         xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap"
+         xmlns:ns4="http://xmlns.oracle.com/pcbpel/adapter/db/12cSOA/CountryInfoCheckEBF/COUNTRY_ISO_CODE_TABLE"
+         xmlns:ns5="http://xmlns.oracle.com/pcbpel/adapter/db/12cSOA/CountryInfoCheckEBF/COUNTRY_FULL_INFO_TABLE"
+         xmlns:ns6="http://xmlns.oracle.com/pcbpel/adapter/db/top/COUNTRY_ISO_CODE_TABLE"
+         xmlns:ns7="http://xmlns.oracle.com/pcbpel/adapter/db/top/COUNTRY_FULL_INFO_TABLE">
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      PARTNERLINKS                                                      
+      List of services participating in this BPEL process               
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <import namespace="http://xmlns.oracle.com/Service/CountryInfoCheckEBF/CountryInfoCheckEBF"
+          location="oramds:/apps/resources/CountryInfoCheckEBF.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"
+          ui:processWSDL="true"/>
+  <partnerLinks>
+    <!-- 
+      The 'client' role represents the requester of this service. It is 
+      used for callback. The location and correlation information associated
+      with the client role are automatically set using WS-Addressing.
+    -->
+    <partnerLink name="countryinfocheckebf_client" partnerLinkType="ns1:CountryInfoCheckEBF" myRole="CountryInfoCheckEBFProvider"/>
+    <partnerLink name="CountryInfoCheckProvABCS" partnerLinkType="ns2:CountryInfoCheckProvABCS"
+                 partnerRole="CountryInfoCheckProvABCSProvider"/>
+    <partnerLink name="COUNTRY_ISO_CODE_TABLE" partnerLinkType="ns4:COUNTRY_ISO_CODE_TABLE_plt"
+                 partnerRole="COUNTRY_ISO_CODE_TABLE_role"/>
+    <partnerLink name="COUNTRY_FULL_INFO_TABLE" partnerLinkType="ns5:COUNTRY_FULL_INFO_TABLE_plt"
+                 partnerRole="COUNTRY_FULL_INFO_TABLE_role"/>
+  </partnerLinks>
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      VARIABLES                                                        
+      List of messages and XML documents used within this BPEL process 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <variables>
+    <!-- Reference to the message passed as input during initiation -->
+    <variable name="inputVariable" messageType="ns1:CountryInfoCheckEBFRequestMessage"/>
+
+    <!-- Reference to the message that will be returned to the requester-->
+    <variable name="outputVariable" messageType="ns1:CountryInfoCheckEBFResponseMessage"/>
+    <variable name="InvokeCountryInfoCheckProv_alISOKod_InputVariable" messageType="ns2:alISOKodType"/>
+    <variable name="InvokeCountryInfoCheckProv_alISOKod_OutputVariable" messageType="ns2:alISOKodYanitType"/>
+    <variable name="InvokeCountryInfoCheckProv_alTumUlkeBilgileri_InputVariable" messageType="ns2:alTumUlkeBilgileriType"/>
+    <variable name="InvokeCountryInfoCheckProv_alTumUlkeBilgileri_OutputVariable" messageType="ns2:alTumUlkeBilgileriYanitType"/>
+    <variable name="Invoke_COUNTRY_ISO_CODE_TABLESelect_InputVariable"
+              messageType="ns4:COUNTRY_ISO_CODE_TABLESelect_inputParameters"/>
+    <variable name="Invoke_COUNTRY_ISO_CODE_TABLESelect_OutputVariable"
+              messageType="ns4:CountryIsoCodeTableCollection_msg"/>
+    <variable name="InvokeInsertCountryIsoCodeTable_insert_InputVariable"
+              messageType="ns4:CountryIsoCodeTableCollection_msg"/>
+    <variable name="Invoke_COUNTRY_FULL_INFO_TABLE_insert_InputVariable"
+              messageType="ns5:CountryFullInfoTableCollection_msg"/>
+    <variable name="Invoke_COUNTRY_FULL_INFO_TABLESelect_InputVariable"
+              messageType="ns5:COUNTRY_FULL_INFO_TABLESelect_inputParameters"/>
+    <variable name="Invoke_COUNTRY_FULL_INFO_TABLESelect_OutputVariable"
+              messageType="ns5:CountryFullInfoTableCollection_msg"/>
+  </variables>
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     ORCHESTRATION LOGIC                                               
+     Set of activities coordinating the flow of messages across the    
+     services integrated within this business process                  
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <sequence name="main">
+
+    <!-- Receive input from requestor. (Note: This maps to operation defined in CountryInfoCheckEBF.wsdl) -->
+    <receive name="receiveInput" partnerLink="countryinfocheckebf_client" portType="ns1:CountryInfoCheckEBF" operation="TumUlkeBilgileriniGetir" variable="inputVariable" createInstance="yes"/>
+    <if name="IfalISOCodeNullCheck">
+      <condition>string-length($inputVariable.payload/ns3:sUlkeAdi)&gt;0</condition>
+      <sequence name="Sequence1">
+        <empty name="EmptyNull"/>
+      </sequence>
+      <else>
+        <sequence>
+          <assign name="Transformation2">
+            <bpelx:annotation>
+              <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+            </bpelx:annotation>
+            <copy>
+              <from>ora:doXSLTransformForDoc("../Transformations/Transform_Null.xsl", $inputVariable.payload)</from>
+              <to variable="outputVariable" part="payload"/>
+            </copy>
+          </assign>
+          <reply name="ReplyNullFault" partnerLink="countryinfocheckebf_client" variable="outputVariable"
+                 portType="ns1:CountryInfoCheckEBF" operation="TumUlkeBilgileriniGetir"/>
+          <exit name="Exit1"/>
+        </sequence>
+      </else>
+    </if>
+    <assign name="Transform_COUNTRY_ISO_CODE_TABLE">
+      <bpelx:annotation>
+        <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+      </bpelx:annotation>
+      <copy>
+        <from>ora:doXSLTransformForDoc("../Transformations/Transform_COUNTRY_ISO_CODE_TABLE.xsl", $inputVariable.payload)</from>
+        <to variable="Invoke_COUNTRY_ISO_CODE_TABLESelect_InputVariable"
+            part="COUNTRY_ISO_CODE_TABLESelect_inputParameters"/>
+      </copy>
+    </assign>
+    <invoke name="Invoke_COUNTRY_ISO_CODE_TABLE" partnerLink="COUNTRY_ISO_CODE_TABLE"
+            portType="ns4:COUNTRY_ISO_CODE_TABLE_ptt" operation="COUNTRY_ISO_CODE_TABLESelect"
+            inputVariable="Invoke_COUNTRY_ISO_CODE_TABLESelect_InputVariable"
+            outputVariable="Invoke_COUNTRY_ISO_CODE_TABLESelect_OutputVariable" bpelx:invokeAsDetail="no"/>
+    <if name="IfCountryIsoCodeCheckDb">
+      <condition>string-length($Invoke_COUNTRY_ISO_CODE_TABLESelect_OutputVariable.CountryIsoCodeTableCollection/ns6:CountryIsoCodeTable/ns6:countryIsoCode) &lt; 1</condition>
+      <sequence>
+        <assign name="Transformation1">
+          <bpelx:annotation>
+            <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+          </bpelx:annotation>
+          <copy>
+            <from>ora:doXSLTransformForDoc("../Transformations/Transform_alISOKod.xsl", $inputVariable.payload)</from>
+            <to variable="InvokeCountryInfoCheckProv_alISOKod_InputVariable" part="payload"/>
+          </copy>
+        </assign>
+        <invoke name="InvokeCountryInfoCheckProv" bpelx:invokeAsDetail="no" partnerLink="CountryInfoCheckProvABCS"
+                portType="ns2:CountryInfoCheckProvABCS" operation="alISOKod"
+                inputVariable="InvokeCountryInfoCheckProv_alISOKod_InputVariable"
+                outputVariable="InvokeCountryInfoCheckProv_alISOKod_OutputVariable"/>
+        <if name="IfalISOCodeWrongInputCheck">
+          <condition>$InvokeCountryInfoCheckProv_alISOKod_OutputVariable.payload/ns3:UlkeISOKodSonuc = "No country found by that name"</condition>
+          <sequence name="Sequence2">
+            <assign name="Transformation3">
+              <bpelx:annotation>
+                <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+              </bpelx:annotation>
+              <copy>
+                <from>ora:doXSLTransformForDoc("../Transformations/TransformWrong.xsl", $InvokeCountryInfoCheckProv_alISOKod_InputVariable.payload)</from>
+                <to variable="outputVariable" part="payload"/>
+              </copy>
+            </assign>
+            <reply name="ReplyWrongInputFault" partnerLink="countryinfocheckebf_client" variable="outputVariable"
+                   portType="ns1:CountryInfoCheckEBF" operation="TumUlkeBilgileriniGetir"/>
+            <exit name="Exit2"/>
+          </sequence>
+          <else>
+            <empty name="EmptyContinue"/>
+          </else>
+        </if>
+        <assign name="TransformInsertIsoCode">
+          <bpelx:annotation>
+            <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+          </bpelx:annotation>
+          <copy>
+            <from>ora:doXSLTransformForDoc("../Transformations/TransformInsertIsoCode.xsl", $inputVariable.payload, "InvokeCountryInfoCheckProv_alISOKod_OutputVariable.payload", $InvokeCountryInfoCheckProv_alISOKod_OutputVariable.payload)</from>
+            <to variable="InvokeInsertCountryIsoCodeTable_insert_InputVariable" part="CountryIsoCodeTableCollection"/>
+          </copy>
+        </assign>
+        <invoke name="InvokeInsertCountryIsoCodeTable" bpelx:invokeAsDetail="no" partnerLink="COUNTRY_ISO_CODE_TABLE"
+                portType="ns4:COUNTRY_ISO_CODE_TABLE_ptt" operation="insert"
+                inputVariable="InvokeInsertCountryIsoCodeTable_insert_InputVariable"/>
+      </sequence>
+      <else>
+        <empty name="TODO"/>
+      </else>
+    </if>
+    <assign name="Transform_COUNTRY_FULL_INFO_TABLE">
+      <bpelx:annotation>
+        <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+      </bpelx:annotation>
+      <copy>
+        <from>ora:doXSLTransformForDoc("../Transformations/Transform_COUNTRY_FULL_INFO_TABLE.xsl", $InvokeCountryInfoCheckProv_alISOKod_OutputVariable.payload, "Invoke_COUNTRY_ISO_CODE_TABLESelect_OutputVariable.CountryIsoCodeTableCollection", $Invoke_COUNTRY_ISO_CODE_TABLESelect_OutputVariable.CountryIsoCodeTableCollection)</from>
+        <to variable="Invoke_COUNTRY_FULL_INFO_TABLESelect_InputVariable"
+            part="COUNTRY_FULL_INFO_TABLESelect_inputParameters"/>
+      </copy>
+    </assign>
+    <invoke name="Invoke_COUNTRY_FULL_INFO_TABLE" bpelx:invokeAsDetail="no" partnerLink="COUNTRY_FULL_INFO_TABLE"
+            portType="ns5:COUNTRY_FULL_INFO_TABLE_ptt" operation="COUNTRY_FULL_INFO_TABLESelect"
+            inputVariable="Invoke_COUNTRY_FULL_INFO_TABLESelect_InputVariable"
+            outputVariable="Invoke_COUNTRY_FULL_INFO_TABLESelect_OutputVariable"/>
+    <if name="IfCountryFullInfoCheckDb">
+      <condition>string-length($Invoke_COUNTRY_FULL_INFO_TABLESelect_OutputVariable.CountryFullInfoTableCollection/ns7:CountryFullInfoTable/ns7:countryIsoCode) &lt; 1</condition>
+      <sequence>
+        <assign name="TransformCountryInfoCheckProv">
+          <bpelx:annotation>
+            <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+          </bpelx:annotation>
+          <copy>
+            <from>ora:doXSLTransformForDoc("../Transformations/TransformCountryInfoCheckProv.xsl", $InvokeCountryInfoCheckProv_alISOKod_OutputVariable.payload, "Invoke_COUNTRY_ISO_CODE_TABLESelect_OutputVariable.CountryIsoCodeTableCollection", $Invoke_COUNTRY_ISO_CODE_TABLESelect_OutputVariable.CountryIsoCodeTableCollection, "inputVariable.payload", $inputVariable.payload)</from>
+            <to variable="InvokeCountryInfoCheckProv_alTumUlkeBilgileri_InputVariable" part="payload"/>
+          </copy>
+        </assign>
+        <invoke name="InvokeCountryInfoCheckProvFullCountryInfo" bpelx:invokeAsDetail="no"
+                partnerLink="CountryInfoCheckProvABCS" portType="ns2:CountryInfoCheckProvABCS"
+                operation="alTumUlkeBilgileri"
+                inputVariable="InvokeCountryInfoCheckProv_alTumUlkeBilgileri_InputVariable"
+                outputVariable="InvokeCountryInfoCheckProv_alTumUlkeBilgileri_OutputVariable"/>
+        <assign name="TransformProvFullCountryInsertDb">
+          <bpelx:annotation>
+            <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+          </bpelx:annotation>
+          <copy>
+            <from>ora:doXSLTransformForDoc("../Transformations/TransformProvFullCountryInsertDb.xsl", $InvokeCountryInfoCheckProv_alTumUlkeBilgileri_OutputVariable.payload)</from>
+            <to variable="Invoke_COUNTRY_FULL_INFO_TABLE_insert_InputVariable" part="CountryFullInfoTableCollection"/>
+          </copy>
+        </assign>
+        <invoke name="InvokeInsertFullCountryInfoDb" bpelx:invokeAsDetail="no" partnerLink="COUNTRY_FULL_INFO_TABLE"
+                portType="ns5:COUNTRY_FULL_INFO_TABLE_ptt" operation="insert"
+                inputVariable="Invoke_COUNTRY_FULL_INFO_TABLE_insert_InputVariable"/>
+      </sequence>
+      <else>
+        <empty name="DBTODO"/>
+      </else>
+    </if>
+    <if name="IfFullCountryInfoProv">
+      <condition>string-length($InvokeCountryInfoCheckProv_alTumUlkeBilgileri_OutputVariable.payload/ns3:TumUlkeBilgileriSonuc/ns3:sISOKod)&gt;1</condition>
+      <assign name="AssignOutputVariable">
+        <copy>
+          <from>$InvokeCountryInfoCheckProv_alTumUlkeBilgileri_OutputVariable.payload</from>
+          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload</to>
+        </copy>
+      </assign>
+      <else>
+        <assign name="TransformationFullCountryOutput">
+          <bpelx:annotation>
+            <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+          </bpelx:annotation>
+          <copy>
+            <from>ora:doXSLTransformForDoc("../Transformations/TransformationFullCountryOutput.xsl", $Invoke_COUNTRY_FULL_INFO_TABLESelect_OutputVariable.CountryFullInfoTableCollection, "inputVariable.payload", $inputVariable.payload)</from>
+            <to variable="outputVariable" part="payload"/>
+          </copy>
+        </assign>
+      </else>
+    </if>
+    <!-- Generate reply to synchronous request -->
+    <reply name="replyOutput" partnerLink="countryinfocheckebf_client" portType="ns1:CountryInfoCheckEBF" operation="TumUlkeBilgileriniGetir" variable="outputVariable"/>
+  </sequence>
+</process>

@@ -1,0 +1,13 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Faults>
+   <Fault>
+      <severity>warning</severity>
+      <loc>/ns:composite/ns:reference[@name='CountryInfoCheckProvABCS']</loc>
+      <line>47</line>
+      <col>117</col>
+      <file>C:\senfoni\12cSOA\CountryInfoCheckEBF\SOA\composite.xml</file>
+      <name>C:\senfoni\12cSOA\CountryInfoCheckEBF\SOA\composite.xml</name>
+      <fix/>
+      <msg>Failed to Find Binding "CountryInfoCheckProvABCS":"{http://xmlns.oracle.com/OSB/CountryInfo/CountryInfoCheckProvABCS}CountryInfoCheckProvABCS_pt" in WSDL Manager</msg>
+   </Fault>
+</Faults>
