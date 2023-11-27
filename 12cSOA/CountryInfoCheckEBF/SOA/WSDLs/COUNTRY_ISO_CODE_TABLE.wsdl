@@ -1,0 +1,38 @@
+<wsdl:definitions
+     name="COUNTRY_ISO_CODE_TABLE"
+     targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/12cSOA/CountryInfoCheckEBF/COUNTRY_ISO_CODE_TABLE"
+     xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/12cSOA/CountryInfoCheckEBF/COUNTRY_ISO_CODE_TABLE"
+     xmlns:jca="http://xmlns.oracle.com/pcbpel/wsdl/jca/"
+     xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/"
+     xmlns:top="http://xmlns.oracle.com/pcbpel/adapter/db/top/COUNTRY_ISO_CODE_TABLE"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    >
+  <plt:partnerLinkType name="COUNTRY_ISO_CODE_TABLE_plt" >
+    <plt:role name="COUNTRY_ISO_CODE_TABLE_role" >
+      <plt:portType name="tns:COUNTRY_ISO_CODE_TABLE_ptt" />
+    </plt:role>
+  </plt:partnerLinkType>
+    <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema" >
+        <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/top/COUNTRY_ISO_CODE_TABLE" schemaLocation="../Schemas/COUNTRY_ISO_CODE_TABLE_table.xsd" />
+      </schema>
+    </wsdl:types>
+    <wsdl:message name="COUNTRY_ISO_CODE_TABLESelect_inputParameters">
+        <wsdl:part name="COUNTRY_ISO_CODE_TABLESelect_inputParameters" element="top:COUNTRY_ISO_CODE_TABLESelect_countryNameInputParameters"/>
+    </wsdl:message>
+    <wsdl:message name="CountryIsoCodeTableCollection_msg">
+        <wsdl:part name="CountryIsoCodeTableCollection" element="top:CountryIsoCodeTableCollection"/>
+    </wsdl:message>
+    <wsdl:portType name="COUNTRY_ISO_CODE_TABLE_ptt">
+        <wsdl:operation name="insert">
+            <wsdl:input message="tns:CountryIsoCodeTableCollection_msg"/>
+        </wsdl:operation>
+        <wsdl:operation name="update">
+            <wsdl:input message="tns:CountryIsoCodeTableCollection_msg"/>
+        </wsdl:operation>
+        <wsdl:operation name="COUNTRY_ISO_CODE_TABLESelect">
+            <wsdl:input message="tns:COUNTRY_ISO_CODE_TABLESelect_inputParameters"/>
+            <wsdl:output message="tns:CountryIsoCodeTableCollection_msg"/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>

@@ -1,0 +1,42 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<xs:schema targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/top/COUNTRY_FULL_INFO_TABLE" xmlns="http://xmlns.oracle.com/pcbpel/adapter/db/top/COUNTRY_FULL_INFO_TABLE" elementFormDefault="qualified" attributeFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+   <xs:element name="CountryFullInfoTableCollection" type="CountryFullInfoTableCollection"/>
+   <xs:complexType name="CountryFullInfoTableCollection">
+      <xs:sequence>
+         <xs:element name="CountryFullInfoTable" type="CountryFullInfoTable" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="CountryFullInfoTable">
+      <xs:sequence>
+         <xs:element name="countryIsoCode" type="string5"/>
+         <xs:element name="countryName" type="string200" minOccurs="0"/>
+         <xs:element name="countryCapitalCity" type="string200" minOccurs="0"/>
+         <xs:element name="countryPhoneCode" type="xs:decimal" minOccurs="0"/>
+         <xs:element name="countryContinentCode" type="string5" minOccurs="0"/>
+         <xs:element name="countryCurrencyIsoCode" type="string5" minOccurs="0"/>
+         <xs:element name="countryFlag" type="string200" minOccurs="0"/>
+         <xs:element name="countryLanguage" type="string100" minOccurs="0"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:element name="COUNTRY_FULL_INFO_TABLESelect_countryIsoCodeInputParameters" type="COUNTRY_FULL_INFO_TABLESelect_countryIsoCode"/>
+   <xs:complexType name="COUNTRY_FULL_INFO_TABLESelect_countryIsoCode">
+      <xs:sequence>
+         <xs:element name="countryIsoCode" type="xs:string" minOccurs="1" maxOccurs="1"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:simpleType name="string5">
+      <xs:restriction base="xs:string">
+         <xs:maxLength value="5"/>
+      </xs:restriction>
+   </xs:simpleType>
+   <xs:simpleType name="string200">
+      <xs:restriction base="xs:string">
+         <xs:maxLength value="200"/>
+      </xs:restriction>
+   </xs:simpleType>
+   <xs:simpleType name="string100">
+      <xs:restriction base="xs:string">
+         <xs:maxLength value="100"/>
+      </xs:restriction>
+   </xs:simpleType>
+</xs:schema>

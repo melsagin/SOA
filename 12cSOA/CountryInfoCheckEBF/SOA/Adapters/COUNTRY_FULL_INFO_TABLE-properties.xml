@@ -1,0 +1,40 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+   <entry key="root_descriptor_alias">COUNTRY_FULL_INFO_TABLE</entry>
+   <entry key="COUNTRY_FULL_INFO_TABLE.COUNTRY_CAPITAL_CITY:db_column_size">200</entry>
+   <entry key="COUNTRY_FULL_INFO_TABLE.COUNTRY_ISO_CODE:db_column_type">VARCHAR2</entry>
+   <entry key="COUNTRY_FULL_INFO_TABLE.COUNTRY_NAME:db_column_type">VARCHAR2</entry>
+   <entry key="COUNTRY_FULL_INFO_TABLE.COUNTRY_CONTINENT_CODE:db_column_type">VARCHAR2</entry>
+   <entry key="COUNTRY_FULL_INFO_TABLE.COUNTRY_CURRENCY_ISO_CODE:db_column_size">5</entry>
+   <entry key="COUNTRY_FULL_INFO_TABLE.COUNTRY_PHONE_CODE:db_column_type">NUMBER</entry>
+   <entry key="COUNTRY_FULL_INFO_TABLE.COUNTRY_LANGUAGE:db_column_not_null">true</entry>
+   <entry key="COUNTRY_FULL_INFO_TABLE.COUNTRY_ISO_CODE:db_column_size">5</entry>
+   <entry key="COUNTRY_FULL_INFO_TABLE.COUNTRY_NAME:db_column_size">200</entry>
+   <entry key="COUNTRY_FULL_INFO_TABLE.COUNTRY_CONTINENT_CODE:db_column_not_null">true</entry>
+   <entry key="COUNTRY_FULL_INFO_TABLE.COUNTRY_CURRENCY_ISO_CODE:db_column_not_null">true</entry>
+   <entry key="COUNTRY_FULL_INFO_TABLE.COUNTRY_CONTINENT_CODE:db_column_size">5</entry>
+   <entry key="COUNTRY_FULL_INFO_TABLE.COUNTRY_CAPITAL_CITY:db_column_not_null">true</entry>
+   <entry key="COUNTRY_FULL_INFO_TABLE.COUNTRY_FLAG:db_column_not_null">true</entry>
+   <entry key="COUNTRY_FULL_INFO_TABLE:db_table_type">TABLE</entry>
+   <entry key="COUNTRY_FULL_INFO_TABLE:db_column_7">COUNTRY_LANGUAGE</entry>
+   <entry key="COUNTRY_FULL_INFO_TABLE:db_column_6">COUNTRY_FLAG</entry>
+   <entry key="COUNTRY_FULL_INFO_TABLE:db_column_5">COUNTRY_CURRENCY_ISO_CODE</entry>
+   <entry key="COUNTRY_FULL_INFO_TABLE:db_column_4">COUNTRY_CONTINENT_CODE</entry>
+   <entry key="COUNTRY_FULL_INFO_TABLE.COUNTRY_LANGUAGE:db_column_type">VARCHAR2</entry>
+   <entry key="COUNTRY_FULL_INFO_TABLE:db_column_3">COUNTRY_PHONE_CODE</entry>
+   <entry key="COUNTRY_FULL_INFO_TABLE:db_column_2">COUNTRY_CAPITAL_CITY</entry>
+   <entry key="COUNTRY_FULL_INFO_TABLE:db_column_1">COUNTRY_NAME</entry>
+   <entry key="return_single_result_set">false</entry>
+   <entry key="COUNTRY_FULL_INFO_TABLE:db_column_0">COUNTRY_ISO_CODE</entry>
+   <entry key="COUNTRY_FULL_INFO_TABLE.COUNTRY_NAME:db_column_not_null">true</entry>
+   <entry key="COUNTRY_FULL_INFO_TABLE.COUNTRY_FLAG:db_column_type">VARCHAR2</entry>
+   <entry key="COUNTRY_FULL_INFO_TABLE.COUNTRY_LANGUAGE:db_column_size">100</entry>
+   <entry key="COUNTRY_FULL_INFO_TABLE.COUNTRY_PHONE_CODE:db_column_precision">38</entry>
+   <entry key="COUNTRY_FULL_INFO_TABLE.COUNTRY_ISO_CODE:db_column_not_null">true</entry>
+   <entry key="COUNTRY_FULL_INFO_TABLE.COUNTRY_PHONE_CODE:db_column_scale">0</entry>
+   <entry key="COUNTRY_FULL_INFO_TABLE.COUNTRY_CAPITAL_CITY:db_column_type">VARCHAR2</entry>
+   <entry key="COUNTRY_FULL_INFO_TABLE.COUNTRY_FLAG:db_column_size">200</entry>
+   <entry key="COUNTRY_FULL_INFO_TABLE.COUNTRY_PHONE_CODE:db_column_not_null">true</entry>
+   <entry key="COUNTRY_FULL_INFO_TABLE.COUNTRY_CURRENCY_ISO_CODE:db_column_type">VARCHAR2</entry>
+</properties>

@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dgm:gDiagram xmlns:dgm="http://xmlns.oracle.com/sca/soadgm">
+    <dgm:gService name="countryinfocheckebf_client_ep">
+        <dgm:body borderWidth="2" arcRad="20" X="21" Y="171" width="137" height="84">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="11" Y="164" width="156" height="98">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:outputPort name="countryinfocheckebf_client_ep" X="127" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/Service/CountryInfoCheckEBF/CountryInfoCheckEBF#wsdl.interface(CountryInfoCheckEBF)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/soap_service_20x20.png" X="20" Y="4" width="20" height="20"/>
+        <dgm:operations>
+            <dgm:item>TumUlkeBilgileriniGetir</dgm:item>
+        </dgm:operations>
+    </dgm:gService>
+    <dgm:gReference name="CountryInfoCheckProvABCS">
+        <dgm:body borderWidth="2" arcRad="20" X="826" Y="26" width="136" height="96">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="816" Y="19" width="156" height="110">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="CountryInfoCheckProvABCS" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/OSB/CountryInfo/CountryInfoCheckProvABCS#wsdl.interface(CountryInfoCheckProvABCS)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/soap_service_20x20.png" X="27" Y="4" width="20" height="20"/>
+        <dgm:operations>
+            <dgm:item>alISOKod</dgm:item>
+            <dgm:item>alTumUlkeBilgileri</dgm:item>
+        </dgm:operations>
+    </dgm:gReference>
+    <dgm:gReference name="COUNTRY_ISO_CODE_TABLE">
+        <dgm:body borderWidth="2" arcRad="20" X="826" Y="156" width="136" height="108">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="816" Y="149" width="156" height="122">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="COUNTRY_ISO_CODE_TABLE" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/db/12cSOA/CountryInfoCheckEBF/COUNTRY_ISO_CODE_TABLE#wsdl.interface(COUNTRY_ISO_CODE_TABLE_ptt)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/db_adapter_20x20.png" X="27" Y="4" width="20" height="20"/>
+        <dgm:operations>
+            <dgm:item>insert</dgm:item>
+            <dgm:item>update</dgm:item>
+            <dgm:item>COUNTRY_ISO_CODE_TABLESelect</dgm:item>
+        </dgm:operations>
+    </dgm:gReference>
+    <dgm:gReference name="COUNTRY_FULL_INFO_TABLE">
+        <dgm:body borderWidth="2" arcRad="20" X="826" Y="298" width="136" height="108">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="816" Y="291" width="156" height="122">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="COUNTRY_FULL_INFO_TABLE" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/db/12cSOA/CountryInfoCheckEBF/COUNTRY_FULL_INFO_TABLE#wsdl.interface(COUNTRY_FULL_INFO_TABLE_ptt)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/db_adapter_20x20.png" X="27" Y="4" width="20" height="20"/>
+        <dgm:operations>
+            <dgm:item>insert</dgm:item>
+            <dgm:item>update</dgm:item>
+            <dgm:item>COUNTRY_FULL_INFO_TABLESelect</dgm:item>
+        </dgm:operations>
+    </dgm:gReference>
+    <dgm:gComponent name="CountryInfoCheckEBF">
+        <dgm:body borderWidth="2" arcRad="20" X="427" Y="156" width="130" height="111">
+            <dgm:borderColor r="69" g="113" b="140"/>
+            <dgm:lightBgColor r="166" g="208" b="230"/>
+            <dgm:darkBgColor r="99" g="162" b="201"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="417" Y="149" width="150" height="127">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="countryinfocheckebf_client" X="-10" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/Service/CountryInfoCheckEBF/CountryInfoCheckEBF#wsdl.interface(CountryInfoCheckEBF)"/>
+        <dgm:outputPort name="CountryInfoCheckProvABCS" X="120" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/OSB/CountryInfo/CountryInfoCheckProvABCS#wsdl.interface(CountryInfoCheckProvABCS)"/>
+        <dgm:outputPort name="COUNTRY_ISO_CODE_TABLE" X="120" Y="40" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/db/12cSOA/CountryInfoCheckEBF/COUNTRY_ISO_CODE_TABLE#wsdl.interface(COUNTRY_ISO_CODE_TABLE_ptt)"/>
+        <dgm:outputPort name="COUNTRY_FULL_INFO_TABLE" X="120" Y="65" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/db/12cSOA/CountryInfoCheckEBF/COUNTRY_FULL_INFO_TABLE#wsdl.interface(COUNTRY_FULL_INFO_TABLE_ptt)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/bpel/shared/plugins/resources/images/soa/process_20x20.png" X="10" Y="4" width="20" height="20"/>
+    </dgm:gComponent>
+    <dgm:gWireLink source="countryinfocheckebf_client_ep" target="CountryInfoCheckEBF/countryinfocheckebf_client" width="2">
+        <dgm:gSegment X1="168" Y1="181" X2="417" Y2="181"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="CountryInfoCheckEBF/CountryInfoCheckProvABCS" target="CountryInfoCheckProvABCS" width="2">
+        <dgm:gSegment X1="567" Y1="181" X2="591" Y2="181"/>
+        <dgm:gSegment X1="591" Y1="181" X2="591" Y2="36"/>
+        <dgm:gSegment X1="591" Y1="36" X2="816" Y2="36"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="CountryInfoCheckEBF/COUNTRY_ISO_CODE_TABLE" target="COUNTRY_ISO_CODE_TABLE" width="2">
+        <dgm:gSegment X1="567" Y1="206" X2="606" Y2="206"/>
+        <dgm:gSegment X1="606" Y1="206" X2="606" Y2="166"/>
+        <dgm:gSegment X1="606" Y1="166" X2="816" Y2="166"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="CountryInfoCheckEBF/COUNTRY_FULL_INFO_TABLE" target="COUNTRY_FULL_INFO_TABLE" width="2">
+        <dgm:gSegment X1="567" Y1="231" X2="591" Y2="231"/>
+        <dgm:gSegment X1="591" Y1="231" X2="591" Y2="308"/>
+        <dgm:gSegment X1="591" Y1="308" X2="816" Y2="308"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+</dgm:gDiagram>

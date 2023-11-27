@@ -1,0 +1,38 @@
+<wsdl:definitions
+     name="COUNTRY_FULL_INFO_TABLE"
+     targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/12cSOA/CountryInfoCheckEBF/COUNTRY_FULL_INFO_TABLE"
+     xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/12cSOA/CountryInfoCheckEBF/COUNTRY_FULL_INFO_TABLE"
+     xmlns:jca="http://xmlns.oracle.com/pcbpel/wsdl/jca/"
+     xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/"
+     xmlns:top="http://xmlns.oracle.com/pcbpel/adapter/db/top/COUNTRY_FULL_INFO_TABLE"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    >
+  <plt:partnerLinkType name="COUNTRY_FULL_INFO_TABLE_plt" >
+    <plt:role name="COUNTRY_FULL_INFO_TABLE_role" >
+      <plt:portType name="tns:COUNTRY_FULL_INFO_TABLE_ptt" />
+    </plt:role>
+  </plt:partnerLinkType>
+    <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema" >
+        <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/top/COUNTRY_FULL_INFO_TABLE" schemaLocation="../Schemas/COUNTRY_FULL_INFO_TABLE_table.xsd" />
+      </schema>
+    </wsdl:types>
+    <wsdl:message name="COUNTRY_FULL_INFO_TABLESelect_inputParameters">
+        <wsdl:part name="COUNTRY_FULL_INFO_TABLESelect_inputParameters" element="top:COUNTRY_FULL_INFO_TABLESelect_countryIsoCodeInputParameters"/>
+    </wsdl:message>
+    <wsdl:message name="CountryFullInfoTableCollection_msg">
+        <wsdl:part name="CountryFullInfoTableCollection" element="top:CountryFullInfoTableCollection"/>
+    </wsdl:message>
+    <wsdl:portType name="COUNTRY_FULL_INFO_TABLE_ptt">
+        <wsdl:operation name="insert">
+            <wsdl:input message="tns:CountryFullInfoTableCollection_msg"/>
+        </wsdl:operation>
+        <wsdl:operation name="update">
+            <wsdl:input message="tns:CountryFullInfoTableCollection_msg"/>
+        </wsdl:operation>
+        <wsdl:operation name="COUNTRY_FULL_INFO_TABLESelect">
+            <wsdl:input message="tns:COUNTRY_FULL_INFO_TABLESelect_inputParameters"/>
+            <wsdl:output message="tns:CountryFullInfoTableCollection_msg"/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>
